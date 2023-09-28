@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/d3fc"></script>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+        }
+
+        .main {
+            text-align: center;
+        }
+
+
+        .y-axis path,
+        .y-axis line {
+            stroke: none;
+        }
+
+        rect.bar {
+            rx: 5;
+            ry: 5;
+        }
+
+        #legend-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            margin: 0 auto;
+            max-width: 500px;
+        }
+
+        .legend-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 12px 0;
+            cursor: pointer;
+        }
+
+        .legend-text {
+            color: rgb(87, 86, 86);
+            font-size: 20px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .legend-item:hover .legend-color {
+            border: 1px solid rgb(153, 149, 149);
+            transition: ease-in 3s;
+            /* Đổi đường viền khi hover */
+        }
+
+
+
+        .gridlines-x path,
+        .gridlines-y path {
+            stroke: #ccc;
+            shape-rendering: crispEdges;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 5px;
+            display: none;
+        }
+
+        .tooltip-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .tooltip .name {
+            font-weight: bold;
+        }
+
+        .tooltip .color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-top: 5px;
+        }
+
+        .selected-text {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <svg width="500" height="300">
+            <g transform="translate(40,20)"></g>
+        </svg>
+        <div id="legend-container"></div>
+        <div id="tooltip" class="tooltip">
+            <div class="tooltip-content">
+                <span class="name"></span>
+                <span class="count"></span>
+                <span class="color"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/sh-soft-barChart.js"></script>
+</body>
+
+</html>

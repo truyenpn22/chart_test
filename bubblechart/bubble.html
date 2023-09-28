@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+        }
+
+        .bubble {
+            cursor: pointer;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .b-shadow {
+            position: absolute;
+            width: 200px;
+            height: 20px;
+            border-radius: 50%;
+            box-shadow: rgba(227, 227, 230, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+            opacity: 0.3;
+            bottom: 0;
+            margin-bottom: 80px;
+        }
+
+        #tooltip {
+            position: absolute;
+            visibility: hidden;
+            color: black;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 4px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main" style="position: relative;">
+        <svg id="my-svg" width="500" height="500">
+            <defs>
+                <filter id="inner-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feComponentTransfer in="SourceAlpha">
+                        <feFuncA type="table" tableValues="1 0" />
+                    </feComponentTransfer>
+                    <feGaussianBlur stdDeviation="4" />
+                    <feOffset dx="5" dy="5" result="offsetblur" />
+                    <feFlood flood-color="rgba(0, 0, 0, 0.3)" result="color" />
+                    <feComposite in2="offsetblur" operator="in" />
+                    <feComposite in2="SourceAlpha" operator="in" />
+                    <feMerge>
+                        <feMergeNode in="SourceGraphic" />
+                        <feMergeNode in="comp" />
+                    </feMerge>
+                </filter>
+            </defs>
+        </svg>
+        <div class="b-shadow"></div>
+        <div id="tooltip"></div>
+    </div>
+
+
+    <script src="/sh-soft-bubbleChart.js"></script>
+</body>
+
+</html>
