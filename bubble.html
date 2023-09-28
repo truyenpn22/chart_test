@@ -13,8 +13,6 @@
 
         .bubble {
             cursor: pointer;
-            box-shadow: rgba(252, 252, 253, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-
         }
 
         .main {
@@ -42,8 +40,37 @@
             padding: 10px;
             background-color: white;
             border: 1px solid black;
+            z-index: 1;
             border-radius: 4px;
-            pointer-events: none;
+            white-space: nowrap
+        }
+
+        #tooltip-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #tooltip .name {
+            font-weight: bold;
+        }
+
+        #tooltip .color {
+            display: inline-block;
+            width: 100%;
+            height: 20px;
+            margin-top: 5px;
+        }
+
+        /* Thêm hiệu ứng transition cho tooltip */
+        #tooltip.transition {
+            transition: visibility 0.5s ease;
+        }
+
+        .circle-box-shadow {
+            box-shadow: 5px 100px 10px red;
         }
     </style>
 </head>
@@ -58,7 +85,7 @@
                     </feComponentTransfer>
                     <feGaussianBlur stdDeviation="8" />
                     <feOffset dx="5" dy="5" result="offsetblur" />
-                    <feFlood flood-color="rgba(252, 252, 253, 0.25)" result="color" />
+                    <feFlood flood-color="rgba(0, 0, 0, 0.3)" result="color" />
                     <feComposite in2="offsetblur" operator="in" />
                     <feComposite in2="SourceAlpha" operator="in" />
                     <feMerge>
@@ -69,11 +96,26 @@
             </defs>
         </svg>
         <div class="b-shadow"></div>
-        <div id="tooltip"></div>
+        <div id="tooltip">
+            <div class="name"></div>
+            <div class="count"></div>
+            <div class="color"></div>
+        </div>
     </div>
 
+    <script>
+        const data = [
+            { name: "채용공고1", value: 60, color: "#67b8ec" },
+            { name: "채용공고2", value: 80, color: "#7fdbe7" },
+            { name: "채용공고3", value: 45, color: "#98b0fc" },
+            { name: "채용공고4", value: 30, color: "#613dd5" },
+        ];
 
+
+
+    </script>
     <script src="/sh-soft-bubbleChart.js"></script>
+
 </body>
 
 </html>
