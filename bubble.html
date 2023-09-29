@@ -24,7 +24,7 @@
             position: absolute;
             height: 25px;
             border-radius: 50%;
-            background: rgb(245, 243, 243);
+            background: rgb(247, 247, 247);
         }
 
         #tooltip {
@@ -67,7 +67,7 @@
 
 <body>
     <div class="main">
-        <svg id="my-svg" width="500" height="250" style="position: relative;">
+        <svg id="my-svg" width="500" height="300" style="position: relative;">
             <defs>
                 <filter id="inner-shadow" x="-50%" y="-50%" width="200%" height="200%">
                     <feComponentTransfer in="SourceAlpha">
@@ -92,19 +92,16 @@
                 <div class="count"></div>
             </div>
         </div>
-        <div>
-            <div class="fill-shadow" style="position: absolute;"></div>
-        </div>
+        <div class="fill-shadow" style="position: absolute;"></div>
     </div>
 
     <script>
         const data = [
-            { name: "채용공고", time: 60, color: "#67b8ec" },
             { name: "채용공고", time: 80, color: "#7fdbe7" },
-            { name: "채용공고", time: 45, color: "#98b0fc" },
             { name: "채용공고", time: 30, color: "#613dd5" },
+            { name: "채용공고", time: 60, color: "#67b8ec" },
+            { name: "채용공고", time: 45, color: "#98b0fc" },
         ];
-
     </script>
     <script src="/sh-soft-bubbleChart.js"></script>
 </body>
