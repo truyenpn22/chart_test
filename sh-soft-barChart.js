@@ -2,7 +2,6 @@
 const mySvg = d3.select("#my-svg");
 
 
-// Tạo SVG element
 const svg = d3.select("svg")
     .attr("width", width)
     .attr("height", height);
@@ -10,21 +9,18 @@ const svg = d3.select("svg")
 const g = svg.append("g")
     .attr("transform", `translate(${margin.right},${margin.top})`);
 
-// X scale
 const x = d3.scaleBand()
     .domain(data.map(d => d.name))
     .rangeRound([0, innerWidth])
     .paddingInner(0.9)
     .paddingOuter(0.4);
 
-// Y scale
 const y = d3.scaleLinear()
     .domain([0, d3.max(data, d => d.count)])
     .nice()
     .range([innerHeight, 0]);
 
 
-// Vẽ lưới trục x trước
 g.append("g")
     .attr("class", "gridlines-x")
     .attr("transform", `translate(0, ${innerHeight})`)
@@ -40,7 +36,6 @@ g.append("g")
 g.selectAll("text").remove();
 
 
-// Vẽ lưới trục y trước
 g.append("g")
     .attr("class", "gridlines-y")
     .attr("transform", `translate(${innerWidth}, 0)`)
@@ -103,14 +98,12 @@ function updateLegend(data) {
         .attr("class", "legend-item")
         .style("cursor", "pointer")
         .on("click", function (event, d) {
-            // Xác định xem cột đã được chọn hay chưa
             const isSelected = selectedColumn.includes(d.name)
             if (!isSelected) {
                 selectedColumn.push(d.name)
             } else {
                 selectedColumn = selectedColumn.filter(column => column !== d.name)
             }
-            // Cập nhật class selected-text cho văn bản trong legend item được click
             d3.select(this).select(".legend-text").classed("selected-text", !isSelected);
 
             updateBars();
