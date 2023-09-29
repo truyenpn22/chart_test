@@ -1,23 +1,5 @@
 
-const data = [
-    { name: "채용공고", count: 6500, color: "#613dd5" },
-    { name: "주말농장", count: 5000, color: "#7fdbe7" },
-    { name: "선별진료", count: 7500, color: "#98b0fc" },
-    { name: "보건소홈", count: 1500, color: "#67b8ec" },
-];
-
-
-
-const width = 500;
-const height = 300;
-const margin = { top: 20, right: 40, bottom: 40, left: 40 };
-const innerWidth = width - margin.left - margin.right;
-const innerHeight = height - margin.top - margin.bottom;
-const legendWidth = 500;
-const legendHeight = 100;
-const itemsPerRow = 2;
-let selectedColumn = null;
-
+const mySvg = d3.select("#my-svg");
 
 
 // Tạo SVG element
@@ -101,14 +83,16 @@ g.selectAll("rect")
 
 
 
+let selectedColumn = [];
+
 function updateBars() {
     g.selectAll("rect")
         .transition()
-        .duration(500)
-        .attr("y", d => (selectedColumn === null || selectedColumn === d.name ? y(d.count) : innerHeight))
-        .attr("height", d => (selectedColumn === null || selectedColumn === d.name ? innerHeight - y(d.count) : 0))
-        .attr("class", d => "bar" + (selectedColumn === d.name ? " selected" : ""));
+        .duration(400)
+        .attr("y", d => selectedColumn.length === 0 || !selectedColumn.includes(d.name) ? y(d.count) : innerHeight)
+        .attr("height", d => selectedColumn.length === 0 || !selectedColumn.includes(d.name) ? innerHeight - y(d.count) : 0);
 }
+
 
 function updateLegend(data) {
     const legendItems = d3.select("#legend-container")
@@ -119,17 +103,15 @@ function updateLegend(data) {
         .attr("class", "legend-item")
         .style("cursor", "pointer")
         .on("click", function (event, d) {
-            // Xóa class selected-text từ tất cả các .legend-text
-            d3.selectAll(".legend-text").classed("selected-text", false);
-
-            if (selectedColumn === d.name) {
-                selectedColumn = null;
+            // Xác định xem cột đã được chọn hay chưa
+            const isSelected = selectedColumn.includes(d.name)
+            if (!isSelected) {
+                selectedColumn.push(d.name)
             } else {
-                selectedColumn = d.name;
-
-                // Thêm class selected-text cho .legend-text của legend được click
-                d3.select(this).select(".legend-text").classed("selected-text", true);
+                selectedColumn = selectedColumn.filter(column => column !== d.name)
             }
+            // Cập nhật class selected-text cho văn bản trong legend item được click
+            d3.select(this).select(".legend-text").classed("selected-text", !isSelected);
 
             updateBars();
         });
@@ -138,9 +120,22 @@ function updateLegend(data) {
         .attr("class", "legend-color")
         .style("background-color", d => d.color);
 
+
     legendItems.append("div")
         .attr("class", "legend-text")
-        .text(d => d.name);
+        .text(d => d.name)
+        .on("mouseover", function (event, d) {
+            d3.select(this).append("div")
+                .attr("class", "legend-tooltip")
+                .html(d.name)
+                .style("left", (event.pageX) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function (d) {
+            // Hide tooltip on mouseout
+            d3.select(".legend-tooltip").remove();
+        });
+
 }
 
 updateLegend(data);

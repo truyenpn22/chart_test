@@ -16,21 +16,15 @@
         }
 
         .main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
+            width: 500px;
+            margin: 0 auto;
         }
 
         .b-shadow {
             position: absolute;
-            width: 200px;
-            height: 20px;
+            height: 25px;
             border-radius: 50%;
-            box-shadow: rgba(223, 223, 224, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-            opacity: 0.3;
-            bottom: 0;
-            margin-bottom: 80px;
+            background: rgb(245, 243, 243);
         }
 
         #tooltip {
@@ -48,9 +42,6 @@
         #tooltip-content {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
         }
 
         #tooltip .name {
@@ -59,25 +50,24 @@
 
         #tooltip .color {
             display: inline-block;
-            width: 100%;
-            height: 20px;
-            margin-top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
         }
 
-        /* Thêm hiệu ứng transition cho tooltip */
         #tooltip.transition {
             transition: visibility 0.5s ease;
         }
 
-        .circle-box-shadow {
-            box-shadow: 5px 100px 10px red;
+        .legend-color {
+            background-color: red;
         }
     </style>
 </head>
 
 <body>
-    <div class="main" style="position: relative;">
-        <svg id="my-svg" width="500" height="500">
+    <div class="main">
+        <svg id="my-svg" width="500" height="250" style="position: relative;">
             <defs>
                 <filter id="inner-shadow" x="-50%" y="-50%" width="200%" height="200%">
                     <feComponentTransfer in="SourceAlpha">
@@ -85,7 +75,7 @@
                     </feComponentTransfer>
                     <feGaussianBlur stdDeviation="8" />
                     <feOffset dx="5" dy="5" result="offsetblur" />
-                    <feFlood flood-color="rgba(0, 0, 0, 0.3)" result="color" />
+                    <feFlood flood-color="rgba(240, 236, 236, 0.3)" result="color" />
                     <feComposite in2="offsetblur" operator="in" />
                     <feComposite in2="SourceAlpha" operator="in" />
                     <feMerge>
@@ -95,27 +85,28 @@
                 </filter>
             </defs>
         </svg>
-        <div class="b-shadow"></div>
         <div id="tooltip">
             <div class="name"></div>
-            <div class="count"></div>
-            <div class="color"></div>
+            <div style="display: flex;justify-content: center;align-items: center;gap: 5px;">
+                <div class="color"></div>
+                <div class="count"></div>
+            </div>
+        </div>
+        <div>
+            <div class="fill-shadow" style="position: absolute;"></div>
         </div>
     </div>
 
     <script>
         const data = [
-            { name: "채용공고1", value: 60, color: "#67b8ec" },
-            { name: "채용공고2", value: 80, color: "#7fdbe7" },
-            { name: "채용공고3", value: 45, color: "#98b0fc" },
-            { name: "채용공고4", value: 30, color: "#613dd5" },
+            { name: "채용공고", time: 60, color: "#67b8ec" },
+            { name: "채용공고", time: 80, color: "#7fdbe7" },
+            { name: "채용공고", time: 45, color: "#98b0fc" },
+            { name: "채용공고", time: 30, color: "#613dd5" },
         ];
-
-
 
     </script>
     <script src="/sh-soft-bubbleChart.js"></script>
-
 </body>
 
 </html>

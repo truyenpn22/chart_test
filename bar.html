@@ -7,6 +7,8 @@
     <title>Bar Chart</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/d3fc"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+
     <style>
         body {
             font-family: "Arial", sans-serif;
@@ -42,10 +44,17 @@
             cursor: pointer;
         }
 
+
         .legend-text {
             color: rgb(87, 86, 86);
             font-size: 20px;
+            overflow: hidden;
+            transition: 0.3s ease-out;
+            width: 100px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
+
 
         .legend-color {
             width: 20px;
@@ -58,7 +67,14 @@
         .legend-item:hover .legend-color {
             border: 1px solid rgb(153, 149, 149);
             transition: ease-in 3s;
-            /* Đổi đường viền khi hover */
+        }
+
+        .legend-tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-size: 12px;
         }
 
 
@@ -80,43 +96,66 @@
         .tooltip-content {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            gap: 5px;
         }
 
         .tooltip .name {
             font-weight: bold;
+            overflow: hidden;
+            transition: 0.3s ease-out;
+            width: 120px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
+
+
 
         .tooltip .color {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin-top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
         }
 
         .selected-text {
             text-decoration: line-through;
+            color: #8d1616;
         }
     </style>
 </head>
 
 <body>
     <div class="main">
-        <svg width="500" height="300">
+        <svg id="my-svg">
             <g transform="translate(40,20)"></g>
         </svg>
         <div id="legend-container"></div>
         <div id="tooltip" class="tooltip">
             <div class="tooltip-content">
                 <span class="name"></span>
-                <span class="count"></span>
-                <span class="color"></span>
+                <div style="display: flex; justify-content: center;align-items: center;gap: 5px;">
+                    <span class="color"></span>
+                    <span class="count"></span>
+                </div>
             </div>
         </div>
     </div>
-
+    <script>
+        const data = [
+            { name: "채용공고채용공고채용공고채용공고채용공고채용공고채용공고채용공고", count: 6500, color: "#613dd5" },
+            { name: "주말농장", count: 5000, color: "#7fdbe7" },
+            { name: "선별진료", count: 7500, color: "#98b0fc" },
+            { name: "보건소홈", count: 1500, color: "#67b8ec" },
+        ];
+        const width = 500;
+        const height = 300;
+        const margin = { top: 20, right: 40, bottom: 40, left: 40 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+        const legendWidth = 500;
+        const legendHeight = 100;
+        const itemsPerRow = 2;
+    </script>
 
     <script src="/sh-soft-barChart.js"></script>
 </body>
