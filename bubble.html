@@ -6,104 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bubble Chart</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <style>
-        body {
-            font-family: "Arial", sans-serif;
-        }
+    <script src="/sh-soft-bubbleChart.js"></script>
 
-        .bubble {
-            cursor: pointer;
-        }
-
-        .main {
-            width: 500px;
-            margin: 0 auto;
-        }
-
-        .b-shadow {
-            position: absolute;
-            height: 25px;
-            border-radius: 50%;
-            background: rgb(247, 247, 247);
-        }
-
-        #tooltip {
-            position: absolute;
-            visibility: hidden;
-            color: black;
-            padding: 10px;
-            background-color: white;
-            border: 1px solid black;
-            z-index: 1;
-            border-radius: 4px;
-            white-space: nowrap
-        }
-
-        #tooltip-content {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #tooltip .name {
-            font-weight: bold;
-        }
-
-        #tooltip .color {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-        }
-
-        #tooltip.transition {
-            transition: visibility 0.5s ease;
-        }
-
-        .legend-color {
-            background-color: red;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="main">
-        <svg id="my-svg" width="500" height="300" style="position: relative;">
-            <defs>
-                <filter id="inner-shadow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feComponentTransfer in="SourceAlpha">
-                        <feFuncA type="table" tableValues="1 0" />
-                    </feComponentTransfer>
-                    <feGaussianBlur stdDeviation="8" />
-                    <feOffset dx="5" dy="5" result="offsetblur" />
-                    <feFlood flood-color="rgba(240, 236, 236, 0.3)" result="color" />
-                    <feComposite in2="offsetblur" operator="in" />
-                    <feComposite in2="SourceAlpha" operator="in" />
-                    <feMerge>
-                        <feMergeNode in="SourceGraphic" />
-                        <feMergeNode in="comp" />
-                    </feMerge>
-                </filter>
-            </defs>
-        </svg>
-        <div id="tooltip">
-            <div class="name"></div>
-            <div style="display: flex;justify-content: center;align-items: center;gap: 5px;">
-                <div class="color"></div>
-                <div class="count"></div>
-            </div>
-        </div>
-        <div class="fill-shadow" style="position: absolute;"></div>
-    </div>
-
+    <div id="chart"></div>
     <script>
+        const chartConfig = {
+            options: {
+                tooltip: {
+                    backgroundColor: "white",
+                    borderRadius: "1px solid black",
+                    color: "gray"
+                },
+                label: {
+                    labelFont: "15px",
+                },
+            },
+        };
+
+
         const data = [
-            { name: "채용공고", time: 80, color: "#7fdbe7" },
-            { name: "채용공고", time: 30, color: "#613dd5" },
-            { name: "채용공고", time: 60, color: "#67b8ec" },
-            { name: "채용공고", time: 45, color: "#98b0fc" },
+            { name: "채용공고", count: 500, time: 10000, color: "#7fdbe7" },
+            { name: "채용공고", count: 5500, time: 330, color: "#613dd5" },
+            { name: "채용공고", count: 2500, time: 660, color: "#67b8ec" },
+            { name: "채용공고", count: 1500, time: 455, color: "#98b0fc" },
         ];
+        initializeChart(chartConfig, data);
     </script>
-    <script src="/sh-soft-bubbleChart.js"></script>
+
 </body>
 
 </html>
